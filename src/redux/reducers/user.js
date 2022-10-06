@@ -1,4 +1,4 @@
-import GET_EMAIL from '../actions/index';
+import { GET_EMAIL } from '../actions/index';
 
 const INITIAL_STATE = {
   email: '',
