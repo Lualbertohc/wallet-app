@@ -3,6 +3,7 @@ import requisition from '../../services/data';
 export const GET_EMAIL = 'GET_EMAIL';
 export const GET_API = 'GET_API';
 export const GET_WALLET_FORM = 'GET_WALLET_FORM';
+export const DEL = 'DEL';
 
 export const getEmail = (payload) => ({
   type: GET_EMAIL,
@@ -16,6 +17,11 @@ export const getApi = (payload) => ({
 
 export const getWalletFormAction = (payload) => ({
   type: GET_WALLET_FORM,
+  payload,
+});
+
+export const del = (payload) => ({
+  type: DEL,
   payload,
 });
 

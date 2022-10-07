@@ -1,11 +1,73 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { del } from '../redux/actions/index';
 
 class Table extends Component {
+  handleBtn = (e, id) => {
+    const { expenses, dispatch } = this.props;
+    e.preventDefault();
+    dispatch(del({ id, expenses }));
+  };
+
   render() {
+    const { expenses } = this.props;
     return (
-      <div>Table</div>
+      <div>
+        <h1>Table</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            { expenses.map((info) => (
+              <tr key={ info.id }>
+                <td>{ info.description }</td>
+                <td>{ info.tag }</td>
+                <td>{ info.method }</td>
+                <td>{ Number(info.value).toFixed(2) }</td>
+                <td>{ info.exchangeRates[info.currency].name }</td>
+                <td>{ Number(info.exchangeRates[info.currency].ask).toFixed(2) }</td>
+                <td>
+                  {
+                    Number(info.value * info.exchangeRates[info.currency].ask).toFixed(2)
+                  }
+                </td>
+                <td>Real</td>
+                <td>
+                  <button
+                    data-testid="delete-btn"
+                    type="submit"
+                    onClick={ (e) => this.handleBtn(e, info.id) }
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
 
-export default Table;
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+Table.propTypes = {
+  expenses: PropTypes.array,
+}.isRequired;
+
+export default connect(mapStateToProps)(Table);

@@ -1,4 +1,4 @@
-import { GET_API, GET_WALLET_FORM } from '../actions/index';
+import { GET_API, GET_WALLET_FORM, DEL } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [], // array de string
@@ -19,6 +19,12 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.payload],
+    };
+
+  case DEL:
+    return {
+      ...state,
+      expenses: [...state.expenses].filter((element) => element.id !== action.payload.id),
     };
 
   default:
