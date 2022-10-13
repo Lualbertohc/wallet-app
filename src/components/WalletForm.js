@@ -104,6 +104,7 @@ class WalletForm extends Component {
             <option>Saúde</option>
           </select>
           <button
+            data-testid="btn-wallet"
             type="submit"
             onClick={ this.handleBtn }
           >
