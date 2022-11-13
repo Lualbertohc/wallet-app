@@ -1,23 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-class Header extends Component {
-  render() {
-    const { email, sum } = this.props;
-    return (
-      <div>
-        <p data-testid="email-field">{ email }</p>
-        <p data-testid="total-field">
-          {sum.reduce((acc, cur) => {
-            const result = Number(cur.exchangeRates[cur.currency].ask);
-            return acc + Number(cur.value) * result;
-          }, 0).toFixed(2)}
-        </p>
-        <p data-testid="header-currency-field">BRL</p>
-      </div>
-    );
-  }
+function Header() {
+  const { email, sum } = props;
+
+  return (
+    <div>
+      <p data-testid="email-field">{ email }</p>
+      <p data-testid="total-field">
+        {sum.reduce((acc, cur) => {
+          const result = Number(cur.exchangeRates[cur.currency].ask);
+          return acc + Number(cur.value) * result;
+        }, 0).toFixed(2)}
+      </p>
+      <p data-testid="header-currency-field">BRL</p>
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => ({
