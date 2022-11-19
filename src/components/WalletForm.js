@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getWalletForm } from '../redux/actions/index';
+import React, { useState, useContext } from 'react';
+import context from '../context/context';
 
 function WalletForm() {
+  const { data, setData, exchangeRatesInfo } = useContext(context);
   const [walletForm, setWalletForm] = useState({
     id: 0,
     value: '',
@@ -11,42 +10,34 @@ function WalletForm() {
     currency: 'USD',
     method: 'Dinheiro',
     tag: 'Alimentação',
+    exchangeRates: exchangeRatesInfo,
   });
+
+  const { wallet: { currencies } } = data;
 
   const handleChange = ({ target }) => {
     const { value, name } = target;
     setWalletForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  handleBtn = (e) => {
+  const handleBtn = (e) => {
     e.preventDefault();
-    const { dispatch } = props;
-    const {
-      id,
-      value,
-      description,
-      currency,
-      method,
-      tag } = walletForm;
-    dispatch(getWalletForm({
-      id,
-      value,
-      description,
-      currency,
-      method,
-      tag,
+    setData((prevState) => ({
+      ...prevState,
+      wallet: {
+        currencies,
+        expenses: [walletForm],
+      },
     }));
-    setWalletForm((prevState) => ({
+    setWalletForm((prevState) => ([{
       id: prevState.id + 1,
       value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
-    }));
+    }]));
   };
-
-  const { coins } = props;
 
   return (
     <div>
@@ -76,7 +67,7 @@ function WalletForm() {
           data-testid="currency-input"
           onChange={ handleChange }
         >
-          {coins?.map((coin) => <option key={ coin }>{coin}</option>)}
+          {currencies.map((coin) => <option key={ coin }>{coin}</option>)}
         </select>
         <select
           name="method"
@@ -110,12 +101,4 @@ function WalletForm() {
   );
 }
 
-const mapStateToProps = (state) => ({
-  coins: state.wallet.currencies,
-});
-
-WalletForm.propTypes = {
-  coins: PropTypes.array,
-}.isRequired;
-
-export default connect(mapStateToProps)(WalletForm);
+export default WalletForm;

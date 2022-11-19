@@ -1,16 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { del } from '../redux/actions/index';
+import React, { useContext } from 'react';
+import context from '../context/context';
 
 function Table() {
-  const { expenses } = props;
-
-  handleBtn = (e, id) => {
-    const { dispatch } = props;
-    e.preventDefault();
-    dispatch(del({ id, expenses }));
-  };
+  const { data } = useContext(context);
+  const { wallet: { expenses } } = data;
 
   return (
     <div>
@@ -30,13 +23,13 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { expenses.map((info) => (
+          { expenses !== undefined && expenses.map((info) => (
             <tr key={ info.id }>
               <td>{ info.description }</td>
               <td>{ info.tag }</td>
               <td>{ info.method }</td>
               <td>{ Number(info.value).toFixed(2) }</td>
-              <td>{ info.exchangeRates[info.currency].name }</td>
+              <td>{ info.currency }</td>
               <td>{ Number(info.exchangeRates[info.currency].ask).toFixed(2) }</td>
               <td>
                 {
@@ -44,15 +37,6 @@ function Table() {
                 }
               </td>
               <td>Real</td>
-              <td>
-                <button
-                  data-testid="delete-btn"
-                  type="submit"
-                  onClick={ (e) => handleBtn(e, info.id) }
-                >
-                  Excluir
-                </button>
-              </td>
             </tr>
           ))}
         </tbody>
@@ -61,12 +45,4 @@ function Table() {
   );
 }
 
-const mapStateToProps = (state) => ({
-  expenses: state.wallet.expenses,
-});
-
-Table.propTypes = {
-  expenses: PropTypes.array,
-}.isRequired;
-
-export default connect(mapStateToProps)(Table);
+export default Table;

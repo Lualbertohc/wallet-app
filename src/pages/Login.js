@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { fetchWithThunk, getEmail } from '../redux/actions';
+import context from '../context/context';
 
 function Login() {
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-  });
+  const { setData } = useContext(context);
+  const [user, setUser] = useState({ email: '', password: '' });
   const [isDisabled, setIsDisabled] = useState(true);
   const history = useHistory();
 
@@ -30,8 +26,7 @@ function Login() {
   const handleBtn = (e) => {
     e.preventDefault();
     const { email } = user;
-    dispatch(getEmail(email));
-    dispatch(fetchWithThunk());
+    setData((prevState) => ({ ...prevState, user: { email } }));
     history.push('/carteira');
   };
 
@@ -72,9 +67,4 @@ function Login() {
   );
 }
 
-Login.propTypes = {
-  dispatch: PropTypes.func,
-  history: PropTypes.func,
-}.isRequired;
-
-export default connect()(Login);
+export default Login;
