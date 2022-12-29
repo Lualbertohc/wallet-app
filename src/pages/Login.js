@@ -1,6 +1,8 @@
 import { Button, Stack, TextField, Paper } from '@mui/material';
+import { Image } from 'mui-image';
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import icon from '../styles/icon.png';
 import context from '../context/context';
 import CustomBox from '../styles/LoginStyle';
 
@@ -36,7 +38,7 @@ function Login() {
     <CustomBox>
       <Stack spacing={ 3 }>
         <Paper elevation={ 0 }>
-          <img alt="logo" src="https://cdn.iconscout.com/icon/free/png-256/wallet-2130848-1794979.png" />
+          <Image src={ icon } />
         </Paper>
         <TextField
           onChange={ handleChange }
