@@ -1,9 +1,13 @@
-import { Select, MenuItem } from '@mui/material';
+import {
+  Select,
+  MenuItem,
+  TextField,
+  FormControl,
+  Button,
+  Box,
+} from '@mui/material';
 import React, { useState, useContext } from 'react';
 import context from '../context/context';
-import { BoxWalletForm,
-  IputWalletForm, WalletFormControl,
-  WalletFormButton } from '../styles/WalletFromStyle';
 
 function WalletForm() {
   const { data, setData, exchangeRatesInfo } = useContext(context);
@@ -44,20 +48,26 @@ function WalletForm() {
   };
 
   return (
-    <BoxWalletForm>
-      <IputWalletForm
+    <Box sx={ { display: 'flex', flexWrap: 'wrap' } }>
+      <TextField
         onChange={ handleChange }
+        label="Valor"
         id="value"
         type="number"
         name="value"
+        size="small"
+        sx={ { m: 1, width: '35ch' } }
       />
-      <IputWalletForm
+      <TextField
         onChange={ handleChange }
+        label="Descrição"
         id="description"
         type="text"
         name="description"
+        size="small"
+        sx={ { m: 1, width: '43ch' } }
       />
-      <WalletFormControl onChange={ handleChange }>
+      <FormControl size="small" sx={ { m: 1, width: '35ch' } }>
         <Select
           name="currency"
           onChange={ handleChange }
@@ -65,8 +75,8 @@ function WalletForm() {
         >
           {currencies.map((coin) => <option key={ coin }>{coin}</option>)}
         </Select>
-      </WalletFormControl>
-      <WalletFormControl>
+      </FormControl>
+      <FormControl size="small" sx={ { m: 1, width: '35ch' } }>
         <Select
           onChange={ handleChange }
           name="method"
@@ -76,8 +86,8 @@ function WalletForm() {
           <MenuItem>Cartão de débito</MenuItem>
           <MenuItem>Dinheiro</MenuItem>
         </Select>
-      </WalletFormControl>
-      <WalletFormControl>
+      </FormControl>
+      <FormControl size="small" sx={ { m: 1, width: '35ch' } }>
         <Select
           onChange={ handleChange }
           name="tag"
@@ -89,15 +99,16 @@ function WalletForm() {
           <MenuItem>Saúde</MenuItem>
           <MenuItem>Alimentação</MenuItem>
         </Select>
-      </WalletFormControl>
-      <WalletFormButton
+      </FormControl>
+      <Button
         onClick={ handleBtn }
         type="submit"
         variant="contained"
+        sx={ { m: 1, width: '25ch' } }
       >
         Adicionar despesa
-      </WalletFormButton>
-    </BoxWalletForm>
+      </Button>
+    </Box>
   );
 }
 
