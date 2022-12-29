@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
+import { CssBaseline } from '@mui/material';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Provider from './context/Provider';
@@ -11,7 +12,9 @@ ReactDOM
   .render(
     <Provider>
       <BrowserRouter>
-        <App />
+        <CssBaseline>
+          <App />
+        </CssBaseline>
       </BrowserRouter>
     </Provider>,
   );

@@ -1,6 +1,8 @@
+import { Button, Stack, TextField, Paper } from '@mui/material';
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import context from '../context/context';
+import CustomBox from '../styles/LoginStyle';
 
 function Login() {
   const { setData } = useContext(context);
@@ -31,39 +33,42 @@ function Login() {
   };
 
   return (
-    <div>
-      <form>
-        <label htmlFor="email">
-          Email:
-          <input
-            onChange={ handleChange }
-            data-testid="email-input"
-            id="email"
-            type="text"
-            name="email"
-          />
-        </label>
-        <label htmlFor="email">
-          Password:
-          <input
-            onChange={ handleChange }
-            data-testid="password-input"
-            id="password"
-            type="password"
-            name="password"
-          />
-        </label>
-        <button
+    <CustomBox>
+      <Stack spacing={ 3 }>
+        <Paper elevation={ 0 }>
+          <img alt="logo" src="https://cdn.iconscout.com/icon/free/png-256/wallet-2130848-1794979.png" />
+        </Paper>
+        <TextField
+          onChange={ handleChange }
+          data-testid="email-input"
+          label="email"
+          variant="outlined"
+          type="text"
+          name="email"
+          fullWidth
+        />
+        <TextField
+          onChange={ handleChange }
+          data-testid="password-input"
+          label="password"
+          variant="outlined"
+          type="password"
+          name="password"
+          fullWidth
+        />
+        <Button
           onClick={ handleBtn }
           data-testid="btn"
+          variant="contained"
           type="submit"
           name="btn"
           disabled={ isDisabled }
+          fullWidth
         >
           Entrar
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Stack>
+    </CustomBox>
   );
 }
 

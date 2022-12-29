@@ -1,5 +1,9 @@
+import { Select, MenuItem } from '@mui/material';
 import React, { useState, useContext } from 'react';
 import context from '../context/context';
+import { BoxWalletForm,
+  IputWalletForm, WalletFormControl,
+  WalletFormButton } from '../styles/WalletFromStyle';
 
 function WalletForm() {
   const { data, setData, exchangeRatesInfo } = useContext(context);
@@ -40,64 +44,60 @@ function WalletForm() {
   };
 
   return (
-    <div>
-      <form>
-        <label htmlFor="value">
-          Valor da despesa
-          <input
-            data-testid="value-input"
-            id="value"
-            type="number"
-            name="value"
-            onChange={ handleChange }
-          />
-        </label>
-        <label htmlFor="description">
-          Descrição da despesa
-          <input
-            data-testid="description-input"
-            id="description"
-            type="text"
-            name="description"
-            onChange={ handleChange }
-          />
-        </label>
-        <select
+    <BoxWalletForm>
+      <IputWalletForm
+        onChange={ handleChange }
+        id="value"
+        type="number"
+        name="value"
+      />
+      <IputWalletForm
+        onChange={ handleChange }
+        id="description"
+        type="text"
+        name="description"
+      />
+      <WalletFormControl onChange={ handleChange }>
+        <Select
           name="currency"
-          data-testid="currency-input"
           onChange={ handleChange }
+          displayEmpty
         >
           {currencies.map((coin) => <option key={ coin }>{coin}</option>)}
-        </select>
-        <select
+        </Select>
+      </WalletFormControl>
+      <WalletFormControl>
+        <Select
+          onChange={ handleChange }
           name="method"
-          data-testid="method-input"
-          onChange={ handleChange }
+          displayEmpty
         >
-          <option>Dinheiro</option>
-          <option>Cartão de crédito</option>
-          <option>Cartão de débito</option>
-        </select>
-        <select
+          <MenuItem>Cartão de crédito</MenuItem>
+          <MenuItem>Cartão de débito</MenuItem>
+          <MenuItem>Dinheiro</MenuItem>
+        </Select>
+      </WalletFormControl>
+      <WalletFormControl>
+        <Select
+          onChange={ handleChange }
           name="tag"
-          data-testid="tag-input"
-          onChange={ handleChange }
+          displayEmpty
         >
-          <option>Alimentação</option>
-          <option>Lazer</option>
-          <option>Trabalho</option>
-          <option>Transporte</option>
-          <option>Saúde</option>
-        </select>
-        <button
-          data-testid="btn-wallet"
-          type="submit"
-          onClick={ handleBtn }
-        >
-          Adicionar despesa
-        </button>
-      </form>
-    </div>
+          <MenuItem>Lazer</MenuItem>
+          <MenuItem>Trabalho</MenuItem>
+          <MenuItem>Transporte</MenuItem>
+          <MenuItem>Saúde</MenuItem>
+          <MenuItem>Alimentação</MenuItem>
+        </Select>
+      </WalletFormControl>
+      <WalletFormButton
+        onClick={ handleBtn }
+        type="submit"
+        variant="contained"
+      >
+        Adicionar despesa
+      </WalletFormButton>
+    </BoxWalletForm>
   );
 }
 
