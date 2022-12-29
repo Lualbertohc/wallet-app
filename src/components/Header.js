@@ -26,21 +26,25 @@ function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={ { flexGrow: 1 } }>
-            You Wallet
+          <Typography
+            variant="h6"
+            component="div"
+            sx={ {
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            } }
+          >
+            WALLET
           </Typography>
           <Button color="inherit">{ `Email: ${email}` }</Button>
           <Button color="inherit">BRL</Button>
         </Toolbar>
       </AppBar>
     </Box>
-    // <CustonHeader>
-    //   <img src="https://cdn.iconscout.com/icon/free/png-256/credit-card-2065962-1746111.png" alt="icon" width="70" />
-    //   <CustonBox>
-    //     <p data-testid="email-field">{ `Email: ${email}` }</p>
-    //     <p data-testid="header-currency-field">BRL</p>
-    //   </CustonBox>
-    // </CustonHeader>
   );
 }
 
