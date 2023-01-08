@@ -2,21 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
-import { CssBaseline } from '@mui/material';
+import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Provider from './context/Provider';
+import store from './redux/store';
 
 ReactDOM
   .createRoot(document.getElementById('root'))
   .render(
-    <Provider>
-      <BrowserRouter>
-        <CssBaseline>
-          <App />
-        </CssBaseline>
-      </BrowserRouter>
-    </Provider>,
+    <BrowserRouter>
+      <Provider store={ store }>
+        <App />
+      </Provider>
+    </BrowserRouter>
+    ,
   );
 
 serviceWorker.unregister();

@@ -1,77 +1,88 @@
-import { Button, Stack, TextField, Paper } from '@mui/material';
+import React, { Component } from 'react';
+import { Button, TextField, Paper, Stack } from '@mui/material';
 import { Image } from 'mui-image';
-import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import icon from '../styles/icon.png';
-import context from '../context/context';
-import CustomBox from '../styles/LoginStyle';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import icon from '../style/icon.png';
+import CustomBox from '../style/FormStyle';
+import { fetchWithThunk, getEmail } from '../redux/actions';
 
-function Login() {
-  const { setData } = useContext(context);
-  const [user, setUser] = useState({ email: '', password: '' });
-  const [isDisabled, setIsDisabled] = useState(true);
-  const history = useHistory();
+class Login extends Component {
+  state = {
+    email: '',
+    password: '',
+    isBtnDisabled: true,
+  };
 
-  const verifyBtn = () => {
-    const { email, password } = user;
-    const passwordLength = 6;
+  handleChange = ({ target }) => {
+    const { value, name } = target;
+    this.setState({
+      [name]: value,
+    }, () => this.verifyBtn());
+  };
+
+  verifyBtn = () => {
+    const { email, password } = this.state;
+    const minLength = 6;
     const regex = /\S+@\S+\.\S+/;
     const verifyEmail = regex.test(email);
-    const verifyPassword = password.length >= passwordLength;
-    setIsDisabled(!(verifyEmail && verifyPassword));
+    const verifyPassword = password.length >= minLength;
+    this.setState({ isBtnDisabled: !(verifyEmail && verifyPassword) });
   };
 
-  const handleChange = ({ target }) => {
-    const { value, name } = target;
-    setUser((prevState) => ({ ...prevState, [name]: value }));
-    verifyBtn();
-  };
-
-  const handleBtn = (e) => {
+  handleBtn = (e) => {
     e.preventDefault();
-    const { email } = user;
-    setData((prevState) => ({ ...prevState, user: { email } }));
+    const { dispatch, history } = this.props;
+    const { email } = this.state;
+    dispatch(getEmail(email));
+    dispatch(fetchWithThunk());
     history.push('/carteira');
   };
 
-  return (
-    <CustomBox>
-      <Stack spacing={ 3 }>
-        <Paper elevation={ 0 }>
-          <Image src={ icon } />
-        </Paper>
-        <TextField
-          onChange={ handleChange }
-          data-testid="email-input"
-          label="email"
-          variant="outlined"
-          type="text"
-          name="email"
-          fullWidth
-        />
-        <TextField
-          onChange={ handleChange }
-          data-testid="password-input"
-          label="password"
-          variant="outlined"
-          type="password"
-          name="password"
-          fullWidth
-        />
-        <Button
-          onClick={ handleBtn }
-          data-testid="btn"
-          variant="contained"
-          type="submit"
-          name="btn"
-          disabled={ isDisabled }
-          fullWidth
-        >
-          Entrar
-        </Button>
-      </Stack>
-    </CustomBox>
-  );
+  render() {
+    const { email, password, isBtnDisabled } = this.state;
+    return (
+      <CustomBox>
+        <Stack spacing={ 3 }>
+          <Paper elevation={ 0 }>
+            <Image src={ icon } />
+          </Paper>
+          <TextField
+            data-testid="email-input"
+            type="text"
+            name="email"
+            value={ email }
+            onChange={ this.handleChange }
+            fullWidth
+          />
+          <TextField
+            data-testid="password-input"
+            type="password"
+            name="password"
+            value={ password }
+            onChange={ this.handleChange }
+            fullWidth
+          />
+          <Button
+            data-testid="btn"
+            type="submit"
+            name="btn"
+            disabled={ isBtnDisabled }
+            onClick={ this.handleBtn }
+            variant="contained"
+            fullWidth
+          >
+            Sign In
+          </Button>
+        </Stack>
+      </CustomBox>
+    );
+  }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatch: PropTypes.func,
+  history: PropTypes.func,
+}.isRequired;
+
+export default connect()(Login);

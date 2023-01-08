@@ -8,8 +8,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import InputBase from '@mui/material/InputBase';
-import React, { useContext } from 'react';
-import context from '../context/context';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -40,7 +41,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -53,48 +53,62 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function Header() {
-  const { data } = useContext(context);
-
-  const { user: { email } } = data;
-
-  return (
-    <Box sx={ { flexGrow: 1 } }>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={ { mr: 2 } }
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={ { display: { xs: 'none', sm: 'block' } } }
-          >
-            WALLET
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Filtro..."
-              inputProps={ { 'aria-label': 'search' } }
-            />
-          </Search>
-          <Box sx={ { flexGrow: 1 } } />
-          <Button color="inherit">{ `Email: ${email}` }</Button>
-          <Button color="inherit">BRL</Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  );
+class Header extends Component {
+  render() {
+    const { email, sum } = this.props;
+    return (
+      <Box sx={ { flexGrow: 1 } }>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={ { mr: 2 } }
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={ { display: { xs: 'none', sm: 'block' } } }
+            >
+              WALLET
+            </Typography>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Filtro..."
+                inputProps={ { 'aria-label': 'search' } }
+              />
+            </Search>
+            <Box sx={ { flexGrow: 1 } } />
+            <Button color="inherit">{ `Email: ${email}` }</Button>
+            <Button color="inherit">
+              {sum.reduce((acc, cur) => {
+                const result = Number(cur.exchangeRates[cur.currency].ask);
+                return acc + Number(cur.value) * result;
+              }, 0).toFixed(2)}
+            </Button>
+            <Button color="inherit">BRL</Button>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    );
+  }
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  sum: state.wallet.expenses,
+});
+
+Header.propTypes = {
+  email: PropTypes.string,
+}.isRequired;
+
+export default connect(mapStateToProps)(Header);

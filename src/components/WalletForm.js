@@ -1,116 +1,146 @@
 import {
-  Select,
   MenuItem,
   TextField,
-  FormControl,
   Button,
   Box,
 } from '@mui/material';
-import React, { useState, useContext } from 'react';
-import context from '../context/context';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getWalletForm } from '../redux/actions/index';
 
-function WalletForm() {
-  const { data, setData, exchangeRatesInfo } = useContext(context);
-  const [walletForm, setWalletForm] = useState({
+class WalletForm extends Component {
+  state = {
     id: 0,
     value: '',
     description: '',
     currency: 'USD',
     method: 'Dinheiro',
     tag: 'Alimentação',
-    exchangeRates: exchangeRatesInfo,
-  });
-
-  const { wallet: { currencies } } = data;
-
-  const handleChange = ({ target }) => {
-    const { value, name } = target;
-    setWalletForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleBtn = (e) => {
+  handleChange = ({ target }) => {
+    const { value, name } = target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleBtn = (e) => {
     e.preventDefault();
-    setData((prevState) => ({
-      ...prevState,
-      wallet: {
-        currencies,
-        expenses: [walletForm],
-      },
+    const { dispatch } = this.props;
+    const {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag } = this.state;
+    dispatch(getWalletForm({
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
     }));
-    setWalletForm((prevState) => ([{
+    this.setState((prevState) => ({
       id: prevState.id + 1,
       value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
-    }]));
+    }));
   };
 
-  return (
-    <Box sx={ { display: 'flex', flexWrap: 'wrap' } }>
-      <TextField
-        onChange={ handleChange }
-        label="Valor"
-        id="value"
-        type="number"
-        name="value"
-        size="small"
-        sx={ { m: 1, width: '35ch' } }
-      />
-      <TextField
-        onChange={ handleChange }
-        label="Descrição"
-        id="description"
-        type="text"
-        name="description"
-        size="small"
-        sx={ { m: 1, width: '43ch' } }
-      />
-      <FormControl size="small" sx={ { m: 1, width: '35ch' } }>
-        <Select
+  render() {
+    const { coins } = this.props;
+    const { value, description } = this.state;
+    return (
+      <Box sx={ { display: 'flex', flexWrap: 'wrap' } }>
+        <TextField
+          label="Valor da despesa"
+          id="value"
+          type="number"
+          name="value"
+          value={ value }
+          onChange={ this.handleChange }
+          size="small"
+          sx={ { m: 1, width: '25ch' } }
+        />
+        <TextField
+          label="Descrição"
+          id="description"
+          type="text"
+          name="description"
+          value={ description }
+          onChange={ this.handleChange }
+          size="small"
+          sx={ { m: 1, width: '80ch' } }
+        />
+        <TextField
+          select
+          label="Moeda"
           name="currency"
-          onChange={ handleChange }
-          displayEmpty
+          onChange={ this.handleChange }
+          size="small"
+          sx={ { m: 1, width: '25ch' } }
         >
-          {currencies.map((coin) => <option key={ coin }>{coin}</option>)}
-        </Select>
-      </FormControl>
-      <FormControl size="small" sx={ { m: 1, width: '35ch' } }>
-        <Select
-          onChange={ handleChange }
+          {coins?.map((coin) => (
+            <MenuItem key={ coin } value={ coin }>
+              { coin }
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          select
+          label="Método de pagamento"
+          onChange={ this.handleChange }
           name="method"
           displayEmpty
+          size="small"
+          sx={ { m: 1, width: '25ch' } }
         >
-          <MenuItem>Cartão de crédito</MenuItem>
-          <MenuItem>Cartão de débito</MenuItem>
-          <MenuItem>Dinheiro</MenuItem>
-          <MenuItem>PIX</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl size="small" sx={ { m: 1, width: '35ch' } }>
-        <Select
-          onChange={ handleChange }
+          <MenuItem value="Cartão de crédito">Cartão de crédito</MenuItem>
+          <MenuItem value="Cartão de débito">Cartão de débito</MenuItem>
+          <MenuItem value="Dinheiro">Dinheiro</MenuItem>
+        </TextField>
+        <TextField
+          select
+          label="Tag"
+          onChange={ this.handleChange }
           name="tag"
           displayEmpty
+          size="small"
+          sx={ { m: 1, width: '25ch' } }
         >
-          <MenuItem>Lazer</MenuItem>
-          <MenuItem>Trabalho</MenuItem>
-          <MenuItem>Transporte</MenuItem>
-          <MenuItem>Saúde</MenuItem>
-          <MenuItem>Alimentação</MenuItem>
-        </Select>
-      </FormControl>
-      <Button
-        onClick={ handleBtn }
-        type="submit"
-        variant="contained"
-        sx={ { m: 1, width: '25ch' } }
-      >
-        Adicionar despesa
-      </Button>
-    </Box>
-  );
+          <MenuItem value="Lazer">Lazer</MenuItem>
+          <MenuItem value="Trabalho">Trabalho</MenuItem>
+          <MenuItem value="Transporte">Transporte</MenuItem>
+          <MenuItem value="Saúde">Saúde</MenuItem>
+          <MenuItem value="Alimentação">Alimentação</MenuItem>
+          <MenuItem value="Outros">Outros</MenuItem>
+        </TextField>
+        <Button
+          onClick={ this.handleBtn }
+          type="submit"
+          variant="contained"
+          sx={ { m: 1, width: '25ch' } }
+        >
+          Adicionar despesa
+        </Button>
+      </Box>
+    );
+  }
 }
 
-export default WalletForm;
+const mapStateToProps = (state) => ({
+  coins: state.wallet.currencies,
+});
+
+WalletForm.propTypes = {
+  coins: PropTypes.array,
+}.isRequired;
+
+export default connect(mapStateToProps)(WalletForm);
