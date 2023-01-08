@@ -85,6 +85,7 @@ function WalletForm() {
           <MenuItem>Cartão de crédito</MenuItem>
           <MenuItem>Cartão de débito</MenuItem>
           <MenuItem>Dinheiro</MenuItem>
+          <MenuItem>PIX</MenuItem>
         </Select>
       </FormControl>
       <FormControl size="small" sx={ { m: 1, width: '35ch' } }>
