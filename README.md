@@ -24,6 +24,7 @@ O projeto em desenvolvimento "Wallet" é uma pequena planilha financeira cujo o 
 <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" height=40/>
 <img src="https://img.shields.io/badge/-HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=%23F7DF1E" height=40/>
 <img src="https://img.shields.io/badge/-CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=%23F7DF1E" height=40/>
+<img src="https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=material-ui&logoColor=white" height=40/>
 <img src="https://img.shields.io/badge/jest-%23F24E1E.svg?style=for-the-badge&logo=jest&logoColor=white" height=40/>
 <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" height=40/>
 </p>
