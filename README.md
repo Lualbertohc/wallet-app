@@ -36,7 +36,7 @@ Para ter acesso ao projeto primeiro você deve obter o código fonte
 </p>
 
 ```sh
-git clone git@github.com:Lualbertohc/project-starwars-planets-search.git
+git clone git@github.com:Lualbertohc/wallet-app.git
 ```
 
 <p>
