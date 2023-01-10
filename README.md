@@ -2,7 +2,7 @@
 <img align="center" alt="Header" src="https://c.pxhere.com/images/6f/06/fe92917bc609d26fcf19c03281d0-1569431.jpg!d" />
 </div>
 
-<h1 align="center"> Projeto Wallet </h1>
+<h1 align="center"> :credit_card: Projeto Wallet :chart_with_downwards_trend: </h1>
 
 <p align="center">
 <img src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
@@ -11,11 +11,11 @@
 <h1> :rocket: Introdução </h1>
 
 <p>
-O projeto em desenvolvimento "Wallet" é uma pequena planilha financeira cujo o intuito é armazenar gastos de forma fácil. Através dos inputs na barra superior da aplicaçãio é possível especificar valor, forma de pagamento, moeda usada e até uma pequena descrição. As informações adicionadas pelo usuário formam uma planinlha conforme ilutra o gif abaixo:
+O projeto em desenvolvimento "Wallet" é uma pequena planilha financeira cujo o intuito é armazenar gastos de forma fácil. Através dos inputs na barra superior da aplicaçãio é possível especificar valor, forma de pagamento, moeda usada e até uma pequena descrição. As informações adicionadas pelo usuário formam uma planinlha conforme ilutra a imagem:
 </p>
 
 <div>
-<img src="https://im5.ezgif.com/tmp/ezgif-5-2fff41e50a.gif" />
+<img src="https://live.staticflickr.com/65535/52618578708_ed4340bd21_k.jpg" />
 </div>
 
 <h1>🛠 Tecnologias usadas neste projeto</h1>
