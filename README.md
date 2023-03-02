@@ -32,7 +32,7 @@ O projeto em desenvolvimento "Wallet" é uma pequena planilha financeira cujo o 
 <h1> :open_file_folder: Acesso ao projeto</h1>
 
 <p>
-Para ter acesso ao projeto primeiro você deve obter o código fonte
+Para ter acesso ao projeto primeiro você deve obter o código fonte:
 </p>
 
 ```sh
