@@ -40,7 +40,7 @@ git clone git@github.com:Lualbertohc/wallet-app.git
 ```
 
 <p>
-Instale as dependências de desenvolvimento. Verifique o mecanismo package.json para verificar as versões do node testadas e compatíveis.
+Verifique o mecanismo package.json e instale as dependências de desenvolvimento
 </p>
 
 ```sh
